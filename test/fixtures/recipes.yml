@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  date: 2016-09-07
+  ingredients: MyText
+  directions: MyText
+  cooktime: 2016-09-07 21:14:53
+  servings: 1
+
+two:
+  title: MyString
+  date: 2016-09-07
+  ingredients: MyText
+  directions: MyText
+  cooktime: 2016-09-07 21:14:53
+  servings: 1

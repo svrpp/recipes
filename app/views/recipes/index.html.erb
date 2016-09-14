@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>User</th>
       <th>Date</th>
       <th>Ingredients</th>
       <th>Directions</th>
@@ -19,19 +20,23 @@
     <% @recipes.each do |recipe| %>
       <tr>
         <td><%= recipe.title %></td>
+        <td><%= recipe.user.email if recipe.user %></td>
         <td><%= recipe.date %></td>
         <td><%= recipe.ingredients %></td>
         <td><%= recipe.directions %></td>
         <td><%= recipe.cooktime %></td>
         <td><%= recipe.servings %></td>
         <td><%= link_to 'Show', recipe %></td>
+        <% if recipe.user == current_user %>
         <td><%= link_to 'Edit', edit_recipe_path(recipe) %></td>
         <td><%= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
+<% if user_signed_in? %>
 <%= link_to 'New Recipe', new_recipe_path %>
+<% end %>

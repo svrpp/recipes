@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
-
+  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
  
   def index
     @recipes = Recipe.all
@@ -12,7 +13,7 @@ class RecipesController < ApplicationController
 
   
   def new
-    @recipe = Recipe.new
+    @recipe = current_user.recipes.build
   end
 
  
@@ -21,7 +22,7 @@ class RecipesController < ApplicationController
 
  
   def create
-    @recipe = Recipe.new(recipe_params)
+    @recipe = current_user.recipes.build(recipe_params)
 
     if @recipe.save
      redirect_to @recipe, notice: 'Recipe was successfully created.'
@@ -52,6 +53,11 @@ class RecipesController < ApplicationController
       @recipe = Recipe.find(params[:id])
     end
 
+
+    def correct_user
+      @recipe = current_user.recipes.find_by(id: params[:id])
+      redirect_to recipes_path, notice: "Not Authorized to edit this pin." if @recipe.nil?
+    end
 
     def recipe_params
       params.require(:recipe).permit(:title, :date, :ingredients, :directions, :cooktime, :servings)
